@@ -33,6 +33,9 @@ const productSchema = new mongoose.Schema({
   ],
 });
 
+// Create text index for search
+productSchema.index({ title: "text", description: "text" });
+
 // Create the product model
 const productModel = mongoose.model("product", productSchema);
 
