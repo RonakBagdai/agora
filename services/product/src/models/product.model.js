@@ -31,6 +31,10 @@ const productSchema = new mongoose.Schema({
       id: String,
     },
   ],
+  stock: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // Create text index for search
