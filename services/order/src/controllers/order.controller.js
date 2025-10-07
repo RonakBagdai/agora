@@ -1,5 +1,6 @@
 const orderModel = require("../models/order.model");
 const axios = require("axios");
+const { publishToQueue } = require("../broker/broker");
 
 // Create order from current cart
 async function createOrder(req, res) {
@@ -66,6 +67,9 @@ async function createOrder(req, res) {
         country: req.body.shippingAddress.country,
       },
     });
+
+    await publishToQueue("ORDER_SELLER_DASHBOARD.ORDER_CREATED", order);
+
     return res.status(201).json({ order });
   } catch (error) {
     return res
@@ -171,7 +175,9 @@ async function cancelOrderById(req, res) {
     order.status = "CANCELED";
     await order.save();
 
-    return res.status(200).json({ message: "Order canceled successfully", order });
+    return res
+      .status(200)
+      .json({ message: "Order canceled successfully", order });
   } catch (err) {
     return res
       .status(500)

@@ -9,7 +9,7 @@ connect().then(() => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Notification Service is up and running");
+  res.status(200).send("Notification Service is up and running");
 });
 
 module.exports = app;

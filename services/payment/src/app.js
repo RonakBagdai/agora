@@ -6,7 +6,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/payments", paymentRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).send("Payment Service is up and running");
+});
+
+app.use("/api/payments", paymentRoutes);
 
 module.exports = app;

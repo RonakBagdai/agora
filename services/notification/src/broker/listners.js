@@ -20,6 +20,25 @@ module.exports = () => {
     );
   });
 
+  subscribeToQueue("PAYMENT_NOTIFICATION.PAYMENT_INITIATED", async (data) => {
+    const emailHTMLTemplate = `
+        <h1>Payment Initiated</h1>
+        <p>Dear ${data.username || "<User>"},</p>
+        <p>Your payment of ${data.amount} ${data.currency} for order ID: ${
+      data.orderId
+    } has been initiated.</p>
+        <p>We will notify you once the payment is completed.</p>
+        <p>Best regards,<br/>The Team</p>
+      `;
+
+    await sendEmail(
+      data.email,
+      "Payment Initiated",
+      "Your payment is being processed.",
+      emailHTMLTemplate
+    );
+  });
+
   subscribeToQueue("PAYMENT_NOTIFICATION.PAYMENT_COMPLETED", async (data) => {
     const emailHTMLTemplate = `
         <h1>Payment Successful!</h1>
@@ -43,7 +62,9 @@ module.exports = () => {
     const emailHTMLTemplate = `
         <h1>Payment Failed</h1>
         <p>Dear ${data.username || "<User>"},</p>
-        <p>Unfortunately, your payment for order ID: ${data.orderId} was not successful.</p>
+        <p>Unfortunately, your payment for order ID: ${
+          data.orderId
+        } was not successful.</p>
         <p>Please try again or contact support if the issue persists.</p>
         <p>Best regards,<br/>The Team</p>
       `;
@@ -52,6 +73,25 @@ module.exports = () => {
       data.email,
       "Payment Failed",
       "Unfortunately, your payment was not successful. Please try again.",
+      emailHTMLTemplate
+    );
+  });
+
+  subscribeToQueue("PRODUCT_NOTIFICATION.PRODUCT_CREATED", async (data) => {
+    const emailHTMLTemplate = `
+        <h1>New Product Added!</h1>
+        <p>Dear ${data.username || "<User>"},</p>
+        <p>A new product titled "${
+          data.title
+        }" has been added to the platform.</p>
+        <p>Please review the product details and ensure everything is in order.</p>
+        <p>Best regards,<br/>The Team</p>
+      `;
+
+    await sendEmail(
+      data.email,
+      "New Product Added",
+      `Check out our new product`,
       emailHTMLTemplate
     );
   });

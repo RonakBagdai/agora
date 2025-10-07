@@ -1,16 +1,16 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const authRouter = require("./routes/auth.routes");
+const sellerRoutes = require("./routes/seller.routes");
 
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.status(200).send("Auth Service is up and running");
+  res.status(200).send("Seller Dashboard Service is up and running");
 });
 
-// Routes
-app.use("/api/auth", authRouter);
+app.use("/api/seller/dashboard", sellerRoutes);
 
 module.exports = app;

@@ -6,6 +6,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  res.status(200).send("Product Service is up and running");
+});
+
 /* Product Routes */
 app.use("/api/products", productRoutes);
 
