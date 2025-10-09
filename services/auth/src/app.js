@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  res.status(200).send("Auth Service is up and running");
+  res.status(200).json({ message: "Auth Service is up and running" });
 });
 
 // Routes
